@@ -1,19 +1,17 @@
 
-export const TodoItem = ({ id, description, done, onDeleteTodo, onToggleTodo }) => {
+export const TodoItem = ({ todo, onDeleteTodo, onToggleTodo }) => {
   return (
     <li className="list-group-item d-flex justify-content-between">
         <span 
-          className={`align-self-center ${ done ? 'text-decoration-line-through' : '' }`}
-          onClick={ () => onToggleTodo( id ) }
+          className={`align-self-center ${ (todo.done) ? 'text-decoration-line-through' : '' }`}
+          onClick={ () => onToggleTodo( todo.id ) }
         >
-          { description }
+          { todo.description }
         </span>
         <button 
           className="btn btn-danger"
-          onClick={ () => onDeleteTodo( id ) }
-        >
-          Borrar
-        </button>
+          onClick={ () => onDeleteTodo( todo.id ) }
+        >Borrar</button>
     </li>
-  );
+  )
 }

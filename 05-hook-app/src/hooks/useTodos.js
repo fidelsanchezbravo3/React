@@ -1,48 +1,42 @@
-import { useEffect, useReducer } from "react";
-import { todoReducer } from "../08-useReducer/todoReducer";
-
-const initialState = [];
+import { useEffect, useReducer } from 'react';
+import { todoReducer } from '../08-useReducer/todoReducer';
 
 const init = () => {
-    return JSON.parse( localStorage.getItem('todos') ) || [];
+    return JSON.parse(localStorage.getItem('todos')) || [];
 }
 
 export const useTodos = () => {
-
-    const [todos, dispatch] = useReducer( todoReducer, initialState, init );
+  
+    const [ todos, dispatch ] = useReducer( todoReducer, [], init );
 
     useEffect(() => {
-      localStorage.setItem('todos', JSON.stringify(todos));
-    }, [todos]);
+      localStorage.setItem('todos', JSON.stringify( todos ) );
+    }, [todos])
+    
 
     const handleNewTodo = ( todo ) => {
         const action = {
             type: '[TODO] Add Todo',
-            payload: todo,
-        };
+            payload: todo
+        }
 
         dispatch( action );
-    };
+    }
 
     const handleDeleteTodo = ( id ) => {
-        const action = {
+        dispatch({
             type: '[TODO] Remove Todo',
-            payload: id,
-        }
-
-        dispatch( action );
-    };
+            payload: id
+        });
+    }
 
     const handleToggleTodo = ( id ) => {
-        const action = {
+        dispatch({
             type: '[TODO] Toggle Todo',
-            payload: id,
-        }
+            payload: id
+        });
+    }
 
-        dispatch( action );
-    };
-    
-  
     return {
         todos,
         todosCount: todos.length,
